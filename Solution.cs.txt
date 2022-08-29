@@ -1,0 +1,58 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace FruitApp
+{
+    internal class CountFruits
+    {
+        static bool IsAnagramOf(string word, string line)
+        {
+            var letters = word.ToList();
+            foreach (var c in line)
+            {
+                var index = letters.IndexOf(c);
+                if (index == -1)
+                {
+                    return false;
+                }
+
+                letters.RemoveAt(index);
+            }
+
+            return letters.Count == 0;
+        }
+
+        private static async Task Main(string[] _)
+        {
+            var oranges = 0;
+            var bananas = 0;
+            var apples = 0;
+
+            // Ctrl+F5 to run
+            var lines = await File.ReadAllLinesAsync("Fruits.txt");
+            foreach (var line in lines)
+            {
+                //Print
+                Console.WriteLine(line);
+                if (IsAnagramOf("orange", line))
+                {
+                    oranges++;
+                }
+                else if (IsAnagramOf("banana", line))
+                {
+                    bananas++;
+                }
+                else if (IsAnagramOf("apple", line))
+                {
+                    apples++;
+                }
+            }
+
+            Console.WriteLine("oranges - bananas + apples = " + (oranges - bananas + apples));
+        }
+    }
+}
